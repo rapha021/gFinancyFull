@@ -52,7 +52,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full h-14 fixed bottom-0">
+    <footer className="fixed bottom-0 w-full bg-white h-14">
       <ul className="w-full h-full flex justify-between gap-2 px-4 items-center **:flex **:items-center **:flex-col">
         {actions.map((a) => (
           <Link to={a.pathname}>

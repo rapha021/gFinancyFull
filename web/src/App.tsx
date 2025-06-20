@@ -10,7 +10,7 @@ function App() {
     <>
       <Header />
 
-      <main className="flex flex-col gap-4 pt-24 font-main">
+      <main className="flex flex-col gap-4 py-24 font-main">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/add" element={<NewTransaction />} />
