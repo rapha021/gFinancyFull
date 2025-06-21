@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="w-full h-20 border-b-1 border-gray-200 bg-white flex justify-between items-center px-4 fixed top-0">
+    <header className="fixed top-0 z-10 flex items-center justify-between w-full h-20 px-4 bg-white border-gray-200 border-b-1">
       <div>
         <Link to="/">
           <h2>gFinancy</h2>
