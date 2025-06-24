@@ -1,8 +1,10 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { Plus } from "lucide-react";
 import Card from "../components/Card";
 import CardLimitChart from "../components/CardLimitChart";
+import { useEffect, useState } from "react";
+import CardForm from "../components/CardForm";
 
 export const creditCards = [
   {
@@ -32,6 +34,16 @@ export const creditCards = [
 ];
 
 const MyCards = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  useEffect(() => {
+    if (isFormOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [isFormOpen]);
+
   const containerVariants = {
     hidden: { opacity: 0, y: 0 },
     show: {
@@ -43,38 +55,46 @@ const MyCards = () => {
   };
 
   return (
-    <section className="px-4">
-      <div className="flex items-center justify-between mb-4 font-semibold">
-        <p className="text-lg">Meus cartoes</p>
-        <button className="flex items-center justify-center w-32 h-10 gap-2 text-sm font-semibold text-white bg-emerald-400 rounded-xl">
-          <Plus />
-          <p>Add Card</p>
-        </button>
-      </div>
+    <>
+      <section className="px-4">
+        <div className="flex items-center justify-between mb-4 font-semibold">
+          <p className="text-lg">Meus cartoes</p>
+          <button
+            className="flex items-center justify-center w-32 h-10 gap-2 text-sm font-semibold text-white bg-emerald-400 rounded-xl"
+            onClick={() => setIsFormOpen(true)}
+          >
+            <Plus />
+            <p>Add Card</p>
+          </button>
+        </div>
 
-      <div className="w-full mb-4 bg-gray-200/50 rounded-2xl p-4">
-        <CardLimitChart />
-      </div>
+        <div className="w-full mb-4 bg-gray-200/50 rounded-2xl p-4">
+          <CardLimitChart />
+        </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-        className="flex flex-col gap-4"
-      >
-        {creditCards.map((c) => (
-          <Card
-            closingDate={c.ClosingDate}
-            finalNum={c.FinalNum}
-            limit={c.Limit}
-            name={c.Name}
-            spent={c.Spent}
-            color={c.color}
-            key={c.Name}
-          />
-        ))}
-      </motion.div>
-    </section>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="flex flex-col gap-4"
+        >
+          {creditCards.map((c) => (
+            <Card
+              closingDate={c.ClosingDate}
+              finalNum={c.FinalNum}
+              limit={c.Limit}
+              name={c.Name}
+              spent={c.Spent}
+              color={c.color}
+              key={c.Name}
+            />
+          ))}
+        </motion.div>
+      </section>
+      <AnimatePresence mode="wait">
+        {isFormOpen && <CardForm setIsFormOpen={setIsFormOpen} />}
+      </AnimatePresence>
+    </>
   );
 };
 
