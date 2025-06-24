@@ -1,64 +1,71 @@
-import { ChartColumn, House, Plus, User, WalletCards } from "lucide-react";
+import {
+  ChartColumn,
+  House,
+  Plus,
+  User,
+  WalletCards,
+  type LucideProps,
+} from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+
+interface IAction {
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+  text: string;
+  pathname: string;
+  iconClassname?: string;
+  liClassname?: string;
+}
 
 const Footer = () => {
   const location = useLocation();
 
+  const actions: IAction[] = [
+    {
+      icon: House,
+      pathname: "/",
+      text: "Home",
+    },
+    {
+      icon: ChartColumn,
+      pathname: "/stats",
+      text: "Stats",
+    },
+    {
+      icon: Plus,
+      pathname: "/add",
+      text: "Add",
+      iconClassname: "w-10 h-10 rounded-full bg-emerald-400",
+      liClassname: "pb-4",
+    },
+    {
+      icon: WalletCards,
+      pathname: "/cards",
+      text: "Cards",
+    },
+    {
+      icon: User,
+      pathname: "/profile",
+      text: "Profile",
+    },
+  ];
+
   return (
-    <footer className="w-full h-14 fixed bottom-0">
-      <ul className="w-full h-full flex justify-between gap-2 px-6 items-center **:flex **:items-center **:flex-col">
-        <Link to="/">
-          <li className={`${location.pathname === "/" && "text-emerald-500"}`}>
-            <House />
-            <p>Home</p>
-          </li>
-        </Link>
-
-        <Link to="/stats">
-          <li
-            className={`${
-              location.pathname === "/stats" && "text-emerald-500"
-            }`}
-          >
-            <ChartColumn />
-            <p>Stats</p>
-          </li>
-        </Link>
-
-        <Link to="/add">
-          <li className="pb-4">
-            <Plus className="w-10 h-10 rounded-full bg-emerald-400" />
-            <p
+    <footer className="fixed bottom-0 w-full bg-white h-14">
+      <ul className="w-full h-full flex justify-between gap-2 px-4 items-center **:flex **:items-center **:flex-col">
+        {actions.map((a) => (
+          <Link to={a.pathname}>
+            <li
               className={`${
-                location.pathname === "/add" && "text-emerald-500"
-              }`}
+                location.pathname === a.pathname && "text-emerald-500"
+              } ${a.liClassname}`}
             >
-              Add
-            </p>
-          </li>
-        </Link>
-
-        <Link to="/cards">
-          <li
-            className={`${
-              location.pathname === "/cards" && "text-emerald-500"
-            }`}
-          >
-            <WalletCards />
-            <p>Cards</p>
-          </li>
-        </Link>
-
-        <Link to="/profile">
-          <li
-            className={`${
-              location.pathname === "/profile" && "text-emerald-500"
-            }`}
-          >
-            <User />
-            <p>Profile</p>
-          </li>
-        </Link>
+              <a.icon className={a.iconClassname} />
+              <p className="font-semibold">{a.text}</p>
+            </li>
+          </Link>
+        ))}
       </ul>
     </footer>
   );
